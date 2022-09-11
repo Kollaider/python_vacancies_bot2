@@ -1,5 +1,8 @@
 import requests, time, json
 
+
+vacancies_ids = set()
+
 def get_page(page=0):
 
     params = {
@@ -17,7 +20,7 @@ def get_page(page=0):
 
 
 def parse_data():
-    lst_objs = []
+    lst_objs, new_objs = [], []
     for i in range(11):
         json_data= get_page(i)
         jsObj = json.loads(json_data)
@@ -25,7 +28,12 @@ def parse_data():
 
         time.sleep(0.25)
 
-    return lst_objs
+    for obj in lst_objs:
+        if obj['id'] not in vacancies_ids:
+            new_objs.append(obj)
+        vacancies_ids.add(obj['id'])
+
+    return new_objs
 
 
 

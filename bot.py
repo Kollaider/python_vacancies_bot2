@@ -16,8 +16,11 @@ def strat_bot(message):
 def get_vacancy(message):
     raw_data = parse_data()
     data = handel_vacancies(raw_data)
-    for text in data[:5]:
-        bot.send_message(message.chat.id, text)
+    if not data:
+        bot.send_message(message.chat.id, 'новых вакансий нет..')
+    else:
+        for text in data:
+            bot.send_message(message.chat.id, text)
 
 
 @bot.message_handler()
