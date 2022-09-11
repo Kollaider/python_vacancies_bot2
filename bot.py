@@ -1,19 +1,15 @@
-from telebot.types import ReplyKeyboardMarkup, KeyboardButton
-
 import config
 import telebot
 
 from hh_parsing import parse_data
 from handle_data import handel_vacancies
+from keyboards import check_button
 
 bot = telebot.TeleBot(config.token)
 
 @bot.message_handler(commands=['start'])
 def strat_bot(message):
-    markup = ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = KeyboardButton("Проверить")
-    markup.add(item1)
-    bot.send_message(message.chat.id, 'Бот готов к поиску вакансий', reply_markup=markup)
+    bot.send_message(message.chat.id, 'Бот готов к поиску вакансий', reply_markup=check_button)
 
 
 @bot.message_handler(regexp='Проверить')
@@ -26,7 +22,7 @@ def get_vacancy(message):
 
 @bot.message_handler()
 def another_answer(message):
-    bot.send_message(message.chat.id, 'Не понимаю.. Нажмите кнопку Проверить!')
+    bot.send_message(message.chat.id, 'Не понимаю.. Нажмите кнопку Проверить!', reply_markup=check_button)
 
 
 if __name__ == '__main__':
