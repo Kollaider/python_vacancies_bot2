@@ -1,11 +1,12 @@
-import config
+import os
 import telebot
 
 from hh_parsing import parse_data
 from handle_data import handel_vacancies
 from keyboards import check_button
 
-bot = telebot.TeleBot(config.token)
+token = os.environ['token']
+bot = telebot.TeleBot(token)
 
 @bot.message_handler(commands=['start'])
 def strat_bot(message):
